@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artlum - Where Ideas Shine | Global Digital Workstation</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #f8f9fa; color: #333; }
+        
+        /* Header */
+        header { background: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-container img { height: 40px; width: auto; }
+        .logo-text h1 { font-size: 22px; color: #111; font-weight: 700; line-height: 1; }
+        .logo-text span { color: #7b2cbf; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+        
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav ul li a:hover { color: #7b2cbf; }
+        .cta-btn { background: #7b2cbf; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3); }
+        .cta-btn:hover { background: #5a189a; }
+
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #7b2cbf 0%, #3c096c 100%); color: white; text-align: center; padding: 110px 20px; }
+        .hero h2 { font-size: 46px; margin-bottom: 15px; font-weight: 700; }
+        .hero p { font-size: 18px; max-width: 700px; margin: 0 auto 25px auto; color: #e0aaff; line-height: 1.6; }
+        .ceo-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 6px 18px; border-radius: 20px; font-size: 14px; font-weight: 500; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.3); }
+        .hero-btns { display: flex; justify-content: center; gap: 15px; }
+        .hero .btn-white { background: #ffffff; color: #7b2cbf; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+        .hero .btn-white:hover { background: #f1f1f1; }
+        .hero .btn-outline { background: transparent; color: white; border: 2px solid white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .hero .btn-outline:hover { background: white; color: #7b2cbf; }
+
+        /* Stats Section */
+        .stats { background: white; padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.03); max-width: 1100px; margin: -30px auto 50px auto; border-radius: 12px; position: relative; }
+        .stat-box h3 { font-size: 32px; color: #7b2cbf; font-weight: 700; margin-bottom: 5px; }
+        .stat-box p { color: #666; font-size: 14px; font-weight: 500; }
+
+        /* Containers & Sections */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px 20px; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h3 { font-size: 34px; color: #111; font-weight: 700; }
+        .section-title p { color: #666; font-size: 15px; margin-top: 8px; }
+
+        /* Grid Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .card { background: white; padding: 35px 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); transition: 0.3s; border-top: 4px solid #7b2cbf; }
+        .card:hover { transform: translateY(-7px); box-shadow: 0 10px 30px rgba(123, 44, 191, 0.1); }
+        .card i { font-size: 35px; color: #7b2cbf; margin-bottom: 20px; }
+        .card h4 { font-size: 20px; margin-bottom: 12px; color: #222; }
+        .card p { color: #666; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+        .card a { color: #7b2cbf; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+        /* CEO & Services Info Banner */
+        .info-banner { background: #f1f3f5; padding: 60px 20px; margin-bottom: 60px; }
+        .info-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .info-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); }
+        .info-card h4 { font-size: 22px; color: #7b2cbf; margin-bottom: 15px; font-weight: 700; }
+        .info-card p { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 15px; }
+
+        /* Testimonials */
+        .testimonials { background: #ffffff; padding: 70px 20px; }
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .testi-card { background: #f8f9fa; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 4px solid #7b2cbf; }
+        .testi-card p { font-style: italic; color: #555; font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
+        .testi-client { display: flex; align-items: center; gap: 15px; }
+        .testi-client h5 { font-size: 16px; color: #222; }
+        .testi-client span { font-size: 12px; color: #777; }
+
+        /* Contact Section */
+        .contact-section { max-width: 1100px; margin: 80px auto; padding: 0 20px; }
+        .contact-box { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); display: grid; grid-template-columns: 1fr 1.2fr; overflow: hidden; }
+        .contact-info { background: linear-gradient(135deg, #7b2cbf 0%, #3c096c 100%); color: white; padding: 40px; }
+        .contact-info h3 { font-size: 28px; margin-bottom: 15px; }
+        .contact-info p { color: #e0aaff; font-size: 14px; margin-bottom: 30px; line-height: 1.6; }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 14px; }
+        .info-item i { font-size: 18px; color: #e0aaff; }
+        
+        /* Social Media Icons Box */
+        .social-links { display: flex; gap: 15px; margin-top: 30px; }
+        .social-links a { background: rgba(255,255,255,0.1); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; font-size: 16px; }
+        .social-links a:hover { background: white; color: #7b2cbf; transform: translateY(-3px); }
+
+        .contact-form { padding: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 8px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group textarea:focus { border-color: #7b2cbf; box-shadow: 0 0 5px rgba(123, 44, 191, 0.2); }
+        .form-submit { background: #7b2cbf; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; }
+        .form-submit:hover { background: #5a189a; }
+
+        /* Footer */
+        footer { background: #111; color: white; text-align: center; padding: 40px 20px; }
+        footer p { font-size: 14px; color: #aaa; }
+
+        @media(max-width: 768px) {
+            .contact-box { grid-template-columns: 1fr; }
+            .info-container { grid-template-columns: 1fr; }
+            nav { display: none; }
+            .hero h2 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <!-- آپ کی لوگو فائل 'logo.png' -->
+            <img src="logo.png" alt="Artlum Logo" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1>Artlum</h1>
+                <span>WHERE IDEAS SHINE</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="design.html">Design & Image Tools</a></li>
+                <li><a href="dev.html">Dev & PDF Tools</a></li>
+                <li><a href="ai.html">AI Prompts</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="design.html" class="cta-btn">Explore Tools</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="ceo-badge"><i class="fa-solid fa-award"></i> Led by Ubaid Gulzar (Founder & CEO)</div>
+        <h2>Where Ideas Shine</h2>
+        <p>The ultimate global digital workstation. Providing advanced online digital solutions worldwide, and premier physical IT training & administration services locally.</p>
+        <div class="hero-btns">
+            <a href="design.html" class="btn-white">Explore Free Tools</a>
+            <a href="#contact" class="btn-outline">Join IT Center</a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stat-box">
+            <h3>5+ Years</h3>
+            <p>Professional Experience</p>
+        </div>
+        <div class="stat-box">
+            <h3>150+</h3>
+            <p>Daily Students / Visitors</p>
+        </div>
+        <div class="stat-box">
+            <h3>Global</h3>
+            <p>Online Services</p>
+        </div>
+        <div class="stat-box">
+            <h3>100%</h3>
+            <p>Free Utilities</p>
+        </div>
+    </div>
+
+    <!-- CEO & Services Scope Section -->
+    <section class="info-banner">
+        <div class="info-container">
+            <div class="info-card">
+                <h4><i class="fa-solid fa-user-tie"></i> Leadership & Experience</h4>
+                <p><strong>Ubaid Gulzar</strong> brings over 5 years of rich expertise in IT, Graphic Design, Web/App Development, E-Commerce, and College Administration.</p>
+                <p>Under his visionary leadership, Artlum is built to empower creators, developers, and students with world-class digital tools and professional training.</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fa-solid fa-earth-americas"></i> Physical & Global Services</h4>
+                <p><strong>Physical Presence:</strong> We proudly deliver hands-on IT training, software solutions, and administrative expertise locally in <strong>Khuiratta, Kotli, Azad Kashmir</strong>.</p>
+                <p><strong>Global Reach:</strong> Our digital utility tools, AI vaults, and design resources serve creators, freelancers, and enterprises worldwide 24/7.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Categories / Features -->
+    <div class="container" id="features">
+        <div class="section-title">
+            <h3>World-Class Digital & Utility Hub</h3>
+            <p>Everything designers, developers, and creators need, built right into your browser.</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <h4>Design & Image Tools</h4>
+                <p>Remove image backgrounds instantly, compress high-res photos, and convert formats with zero server delay.</p>
+                <a href="design.html">Use Design Tools &rarr;</a>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-file-pdf"></i>
+                <h4>Dev & PDF Utilities</h4>
+                <p>Convert PDF to JPG, format HTML/CSS/JS code snippets, and generate custom CSS UI elements in seconds.</p>
+                <a href="dev.html">Open Dev Sandbox &rarr;</a>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-brain"></i>
+                <h4>AI Prompt Vault</h4>
+                <p>Discover high-converting prompts and commands for ChatGPT, Midjourney, and modern creative workflows.</p>
+                <a href="ai.html">Browse AI Vault &rarr;</a>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <h4>Artlum IT Center</h4>
+                <p>Learn professional IT skills, web/app development, and digital marketing directly under Ubaid Gulzar's supervision.</p>
+                <a href="#contact">Join Academy &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-title" style="margin-bottom: 40px;">
+            <h3>Loved By Professionals Worldwide</h3>
+            <p>See what creators and students are saying about Artlum tools.</p>
+        </div>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <p>"Ubaid Gulzar's guidance in IT and digital skills has been transformative. Artlum's tools save me hours every single week!"</p>
+                <div class="testi-client">
+                    <div style="background: #7b2cbf; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AG</div>
+                    <div>
+                        <h5>Ali Gulzar</h5>
+                        <span>Graphic Designer</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <p>"Running a medical college administration and building a global platform simultaneously shows Ubaid's exceptional capability. Incredible platform!"</p>
+                <div class="testi-client">
+                    <div style="background: #3c096c; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">UK</div>
+                    <div>
+                        <h5>Ubaid Gulzar</h5>
+                        <span>Founder & CEO, Artlum</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <p>"The AI prompts and browser-based utility tools are top-tier. Having everything free and in one place is an absolute game-changer."</p>
+                <div class="testi-client">
+                    <div style="background: #5a189a; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">FM</div>
+                    <div>
+                        <h5>Fahad Mehmood</h5>
+                        <span>Web Developer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Feedback Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-box">
+            <div class="contact-info">
+                <h3>Get In Touch & Feedback</h3>
+                <p>Have a complaint, feedback, or want to collaborate? Reach out to us or connect via our official social channels below.</p>
+                <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Khuiratta, Kotli, Azad Kashmir (Physical Hub)</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>support@artlum.com</span>
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://whatsapp.com" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://youtube.com" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form action="https://formspree.io/f/your-form-id" method="POST">
+                    <div class="form-group">
+                        <label>Your Name / Subject</label>
+                        <input type="text" name="name" placeholder="Enter your name or complaint subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Email</label>
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message / Feedback / Complaint</label>
+                        <textarea name="message" rows="4" placeholder="Describe your query or feedback in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Submit Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Artlum (Where Ideas Shine). Founded & Led by Ubaid Gulzar. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
