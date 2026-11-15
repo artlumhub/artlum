@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artlum AI Assistant Studio | Where Ideas Shine</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Header - Exact match with Home & Other Pages */
+        header { background: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-container img { height: 45px; width: auto; object-fit: contain; }
+        .logo-text h1 { font-size: 22px; color: #111; font-weight: 700; line-height: 1; }
+        .logo-text span { color: #7b2cbf; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+        
+        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color: #7b2cbf; }
+        .cta-btn { background: #7b2cbf; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3); }
+        .cta-btn:hover { background: #5a189a; }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(15, 3, 25, 0.85), rgba(30, 8, 45, 0.90)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .page-header h2 { font-size: 34px; margin-bottom: 8px; font-weight: 700; }
+        .page-header p { font-size: 14.5px; color: #e0aaff; max-width: 700px; margin: 0 auto; }
+
+        /* Assistant Studio Container */
+        .container { max-width: 950px; margin: 35px auto; padding: 0 20px; flex: 1; width: 100%; }
+        
+        .chat-box-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 680px;
+        }
+
+        .chat-header {
+            background: #7b2cbf;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header i { font-size: 24px; }
+        .chat-header h3 { font-size: 16px; font-weight: 600; }
+        .chat-header span { font-size: 11px; color: #e0aaff; display: block; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .message.ai {
+            background: white;
+            color: #222;
+            align-self: flex-start;
+            border-left: 4px solid #7b2cbf;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .message.user {
+            background: #7b2cbf;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .generated-ai-img {
+            max-width: 100%;
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .action-link-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #7b2cbf;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .action-link-btn:hover { background: #5a189a; }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #cbd5e1;
+            border-radius: 30px;
+            outline: none;
+            font-size: 13.5px;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #7b2cbf;
+            box-shadow: 0 0 5px rgba(123, 44, 191, 0.2);
+        }
+
+        .chat-input-area button {
+            background: #7b2cbf;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .chat-input-area button:hover { background: #5a189a; }
+
+        /* Footer - Exact match */
+        footer { background: #111; color: white; text-align: center; padding: 35px 20px; margin-top: auto; }
+        footer p { font-size: 13px; color: #aaa; margin-bottom: 8px; }
+        footer span { color: #e0aaff; font-weight: 600; }
+
+        @media(max-width: 768px) {
+            nav { display: none; }
+            .page-header h2 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Consistent with all pages) -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Artlum Logo" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1>Artlum</h1>
+                <span>WHERE IDEAS SHINE</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="design.html">Design & Image Tools</a></li>
+                <li><a href="dev.html">Dev & PDF Tools</a></li>
+                <li><a href="ai.html" class="active">AI Prompts</a></li>
+                <li><a href="contact.html">Contact & Services</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="cta-btn">Hire Us</a>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h2>Artlum AI Studio Assistant</h2>
+        <p>Ask questions in English or Urdu, generate clean watermark-free AI images, request websites, code, or digital services instantly!</p>
+    </section>
+
+    <div class="container">
+
+        <!-- Master AI Chat Assistant Studio -->
+        <div class="chat-box-wrapper">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <div>
+                        <h3>Artlum Master Assistant (Led by Ubaid Gulzar)</h3>
+                        <span>Ready to build, write, design, and generate anything for you</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages-container">
+                <div class="message ai">
+                    Hello! I am your <strong>Artlum AI Assistant</strong>. You can ask me anything in English or switch to Urdu if you prefer. For example:<br>
+                    • <em>"Who created you?"</em> or <em>"تمہیں کس نے بنایا ہے؟"</em><br>
+                    • <em>"Create an image of a luxury sports car"</em> (Watermark-free)<br>
+                    • <em>"Write a JavaScript validation function"</em><br>
+                    How can I assist you today?
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="user-chat-input" placeholder="Type your message or prompt here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendUserMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Artlum Hub</span> — Where Ideas Shine. All Rights Reserved.</p>
+        <p style="font-size: 11px; color: #777; margin-top: 5px;">Led by Ubaid Gulzar | Khuiratta, Kotli, Azad Kashmir</p>
+    </footer>
+
+    <!-- Advanced Bilingual & Creator-Aware AI Assistant Script -->
+    <script>
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        }
+
+        // Helper to check if text contains Urdu/Arabic characters
+        function isUrdu(text) {
+            return /[\u0600-\u06FF]/.test(text);
+        }
+
+        function sendUserMessage() {
+            const inputField = document.getElementById('user-chat-input');
+            const chatContainer = document.getElementById('chat-messages-container');
+            const text = inputField.value.trim();
+
+            if (!text) return;
+
+            // Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerText = text;
+            chatContainer.appendChild(userMsg);
+
+            inputField.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            const lowerText = text.toLowerCase();
+            const userWantsUrdu = isUrdu(text) || lowerText.includes('urdu') || lowerText.includes('اردو');
+
+            // 1. Creator / Founder Identity Query Handling
+            if (lowerText.includes('who created you') || lowerText.includes('who made you') || lowerText.includes('who is your founder') || lowerText.includes('who is your ceo') || lowerText.includes('تمہیں کس نے بنایا') || lowerText.includes('تمہارا بانی') || lowerText.includes('سی ای او کون ہے') || lowerText.includes('عبید گلزار')) {
+                
+                setTimeout(() => {
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = 'message ai';
+                    
+                    if(userWantsUrdu) {
+                        aiMsg.innerHTML = `مجھے <strong>Artlum Hub</strong> کے لیے تیار کیا گیا ہے۔ میرے پیچھے ایک ماہر ٹیم ہے اور میرے بانی اور **Founder & CEO** <strong>عبید گلزار (Ubaid Gulzar)</strong> ہیں، جو کھوئی رٹہ، کوٹلی، آزاد کشمیر سے اس ڈیجیٹل پلیٹ فارم کو چلا رہے ہیں اور دنیا بھر کے کلائنٹس کو سافٹ ویئر ڈویلپمنٹ، ویب ڈیزائن اور اے آئی سروسز فراہم کرتے ہیں!`;
+                    } else {
+                        aiMsg.innerHTML = `I was created for <strong>Artlum Hub</strong>. I am powered by a professional team, and my Founder & CEO is <strong>Ubaid Gulzar</strong>, based in Khuiratta, Kotli, Azad Kashmir. He leads Artlum in delivering custom software development, web design, e-commerce solutions, and digital tools worldwide!`;
+                    }
+
+                    chatContainer.appendChild(aiMsg);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 600);
+
+            } 
+            // 2. Image Generation Request Handling (Clean & Watermark-Free)
+            else if (lowerText.includes('image') || lowerText.includes('photo') || lowerText.includes('picture') || lowerText.includes('draw') || lowerText.includes('create') || lowerText.includes('generate') || lowerText.includes('تصویر') || lowerText.includes('بناؤ') || lowerText.includes('logo') || lowerText.includes('لوگو')) {
+                
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'message ai';
+                loadingMsg.innerHTML = userWantsUrdu ? 
+                    `<i class="fa-solid fa-spinner fa-spin"></i> آپ کی فرمائش پر واٹر مارک کے بغیر اے آئی امیج تیار کی جا رہی ہے: <strong>"${text}"</strong>...` :
+                    `<i class="fa-solid fa-spinner fa-spin"></i> Generating clean watermark-free AI image for: <strong>"${text}"</strong>...`;
+                
+                chatContainer.appendChild(loadingMsg);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                const cleanPrompt = encodeURIComponent(text);
+                const randomSeed = Math.floor(Math.random() * 100000);
+                const imageUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=512&height=512&seed=${randomSeed}&nologo=true&enhance=true`;
+
+                const img = new Image();
+                img.src = imageUrl;
+                img.className = 'generated-ai-img';
+                img.alt = text;
+
+                img.onload = function() {
+                    loadingMsg.innerHTML = userWantsUrdu ? 
+                        `یہ لیجیے! آپ کی واٹر مارک سے پاک اے آئی تصویر تیار ہے:<br>` : 
+                        `Here is your clean, watermark-free AI image:<br>`;
+                    
+                    loadingMsg.appendChild(img);
+                    
+                    const downloadBtn = document.createElement('a');
+                    downloadBtn.href = imageUrl;
+                    downloadBtn.target = "_blank";
+                    downloadBtn.download = "artlum_clean_ai_image.jpg";
+                    downloadBtn.className = "action-link-btn";
+                    downloadBtn.innerHTML = userWantsUrdu ? `<i class="fa-solid fa-download"></i> تصویر ڈاؤن لوڈ کریں` : `<i class="fa-solid fa-download"></i> Download Image`;
+                    loadingMsg.appendChild(downloadBtn);
+
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                };
+
+                img.onerror = function() {
+                    loadingMsg.innerText = userWantsUrdu ? "معذرت، امیج سرور فی الحال مصروف ہے۔ براہ کرم دوبارہ کوشش کریں!" : "Sorry, the image server is currently busy. Please try again!";
+                };
+
+            } else {
+                // 3. Bilingual Conversational & Service Routing Response
+                setTimeout(() => {
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = 'message ai';
+                    
+                    if(userWantsUrdu) {
+                        if(lowerText.includes('website') || lowerText.includes('web') || lowerText.includes('ویب سائٹ')) {
+                            aiMsg.innerHTML = `آپ ای کامرس، کسٹم ویب ڈویلپمنٹ اور رسپانسو ویب سائٹس Artlum Hub کے ذریعے بنوا سکتے ہیں۔ ہماری ٹیم آپ کو بہترین سروس فراہم کرتی ہے.<br><br><a href="contact.html" class="action-link-btn"><i class="fa-solid fa-arrow-right"></i> رابطہ کرنے کے لیے کلک کریں</a>`;
+                        } else if(lowerText.includes('code') || lowerText.includes('کوڈ')) {
+                            aiMsg.innerHTML = `آپ جاوا اسکرپٹ اور دیگر لینگویجز کے کوڈ کے لیے ہمارے ڈویلپر سینڈ باکس سے مدد لے سکتے ہیں.<br><br><a href="dev.html" class="action-link-btn"><i class="fa-solid fa-code"></i> Dev Sandbox پر جائیں</a>`;
+                        } else {
+                            aiMsg.innerHTML = `میں نے آپ کا پیغام سمجھ لیا ہے: "<em>${text}</em>"۔ Artlum Hub پر ہم آپ کو فری ٹولز، اے آئی جنریشن اور پروفیشنل ڈیجیٹل سروسز فراہم کرتے ہیں۔ آپ مزید کیا بنوانا چاہتے ہیں؟<br><br><a href="contact.html" class="action-link-btn"><i class="fa-solid fa-id-card"></i> رابطہ اور سروسز پیج</a>`;
+                        }
+                    } else {
+                        // Default English Responses
+                        if(lowerText.includes('website') || lowerText.includes('web') || lowerText.includes('app')) {
+                            aiMsg.innerHTML = `Artlum Hub specializes in custom web development, e-commerce stores, and responsive UI/UX designs led by Ubaid Gulzar.<br><br><a href="contact.html" class="action-link-btn"><i class="fa-solid fa-arrow-right"></i> Request a Custom Build</a>`;
+                        } else if(lowerText.includes('code') || lowerText.includes('javascript') || lowerText.includes('python')) {
+                            aiMsg.innerHTML = `You can generate and test code snippets directly in our interactive developer sandbox.<br><br><a href="dev.html" class="action-link-btn"><i class="fa-solid fa-code
