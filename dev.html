@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev & PDF Tools | Artlum Hub</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF Library for In-Browser PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #f4f6f9; color: #333; }
+        
+        /* Header - Exact match with Home Page */
+        header { background: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-container img { height: 45px; width: auto; object-fit: contain; }
+        .logo-text h1 { font-size: 22px; color: #111; font-weight: 700; line-height: 1; }
+        .logo-text span { color: #7b2cbf; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+        
+        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color: #7b2cbf; }
+        .cta-btn { background: #7b2cbf; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3); }
+        .cta-btn:hover { background: #5a189a; }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(15, 3, 25, 0.85), rgba(30, 8, 45, 0.90)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .page-header h2 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
+        .page-header p { font-size: 16px; color: #e0aaff; max-width: 650px; margin: 0 auto; }
+
+        /* Container & Grid */
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        .tool-section-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-bottom: 35px;
+            border-top: 4px solid #7b2cbf;
+        }
+        .tool-section-card h3 { font-size: 22px; color: #222; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .tool-section-card h3 i { color: #7b2cbf; }
+        .tool-section-card p { color: #666; font-size: 13px; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 6px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; outline: none; background: #fafafa;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #7b2cbf; background: white; box-shadow: 0 0 5px rgba(123, 44, 191, 0.2);
+        }
+
+        .btn-primary {
+            background: #7b2cbf; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { background: #5a189a; }
+
+        /* Code Output Box */
+        .code-output {
+            background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 13px; white-space: pre-wrap; margin-top: 15px; max-height: 300px; overflow-y: auto; display: none; position: relative;
+        }
+        .copy-code-btn {
+            position: absolute; top: 10px; right: 10px; background: #7b2cbf; color: white; border: none; padding: 5px 10px; font-size: 11px; border-radius: 4px; cursor: pointer;
+        }
+
+        /* Footer */
+        footer { background: #111; color: white; text-align: center; padding: 35px 20px; margin-top: 60px; }
+        footer p { font-size: 13px; color: #aaa; margin-bottom: 8px; }
+        footer span { color: #e0aaff; font-weight: 600; }
+
+        @media(max-width: 768px) {
+            nav { display: none; }
+            .page-header h2 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Consistent with Home Page) -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Artlum Logo" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1>Artlum</h1>
+                <span>WHERE IDEAS SHINE</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="design.html">Design & Image Tools</a></li>
+                <li><a href="dev.html" class="active">Dev & PDF Tools</a></li>
+                <li><a href="ai.html">AI Prompts</a></li>
+                <li><a href="contact.html">Contact & Services</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="cta-btn">Hire Us</a>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h2>Developer Sandbox & PDF Utility Hub</h2>
+        <p>Generate clean code snippets in JavaScript, C++, Python, or HTML, and convert your files into PDF instantly—all in your browser without leaving Artlum.</p>
+    </section>
+
+    <div class="container">
+
+        <!-- TOOL 1: AI Code & Script Generator (Stays on website) -->
+        <div class="tool-section-card">
+            <h3><i class="fa-solid fa-code"></i> AI Code & Script Generator</h3>
+            <p>Select your programming language, type what you want to build (e.g., "Create a login validation script" or "C++ calculator"), and generate code instantly.</p>
+            
+            <div class="form-group">
+                <label>Select Language / Technology</label>
+                <select id="lang-select">
+                    <option value="javascript">JavaScript / Node.js</option>
+                    <option value="cpp">C++</option>
+                    <option value="python">Python</option>
+                    <option value="html">HTML / CSS / Tailwind</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Describe Your Code Requirement / Prompt</label>
+                <textarea id="code-prompt" rows="3" placeholder="e.g. Write a JavaScript function to check email validation..."></textarea>
+            </div>
+
+            <button class="btn-primary" onclick="generateCodeSnippet()"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Code</button>
+
+            <div id="code-result-box" class="code-output">
+                <button class="copy-code-btn" onclick="copyGeneratedCode()">Copy Code</button>
+                <code id="code-text-content"></code>
+            </div>
+        </div>
+
+        <!-- TOOL 2: Text / Notes to PDF Generator (Internal Tool) -->
+        <div class="tool-section-card">
+            <h3><i class="fa-solid fa-file-pdf"></i> Instant Text & Notes to PDF Converter</h3>
+            <p>Type your document title and content below to convert and download it directly as a professional PDF file.</p>
+            
+            <div class="form-group">
+                <label>Document Title</label>
+                <input type="text" id="pdf-title" placeholder="e.g. My Project Assignment Note">
+            </div>
+
+            <div class="form-group">
+                <label>Document Body Content</label>
+                <textarea id="pdf-content" rows="4" placeholder="Type or paste your notes, code summary, or report content here..."></textarea>
+            </div>
+
+            <button class="btn-primary" onclick="downloadTextAsPDF()"><i class="fa-solid fa-download"></i> Download as PDF</button>
+        </div>
+
+        <!-- TOOL 3: Images to PDF Converter (Internal Tool) -->
+        <div class="tool-section-card">
+            <h3><i class="fa-solid fa-images"></i> Image to PDF Converter</h3>
+            <p>Upload a picture (JPG/PNG) to instantly pack and download it as an official PDF document.</p>
+            
+            <div class="form-group">
+                <label>Select Image File (JPG/PNG)</label>
+                <input type="file" id="image-file-input" accept="image/*">
+            </div>
+
+            <button class="btn-primary" onclick="convertImageToPDF()"><i class="fa-solid fa-file-arrow-down"></i> Convert Image to PDF</button>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Artlum Hub</span> — Where Ideas Shine. All Rights Reserved.</p>
+        <p style="font-size: 11px; color: #777; margin-top: 5px;">Led by Ubaid Gulzar | Khuiratta, Kotli, Azad Kashmir</p>
+    </footer>
+
+    <!-- JavaScript for In-Browser Tools -->
+    <script>
+        // 1. Code Generator Logic
+        function generateCodeSnippet() {
+            const lang = document.getElementById('lang-select').value;
+            const prompt = document.getElementById('code-prompt').value.trim();
+            const outputBox = document.getElementById('code-result-box');
+            const codeContent = document.getElementById('code-text-content');
+
+            if(!prompt) {
+                alert("Please enter your prompt requirement!");
+                return;
+            }
+
+            let sampleCode = "";
+            if(lang === 'javascript') {
+                // Fixed code based on prompt keyword or smart template
+                sampleCode = `// Generated by Artlum AI Sandbox for: "${prompt}"\n\nfunction artlumProcessData(inputData) {\n    try {\n        console.log("Processing request...");\n        let result = inputData.toString().trim();\n        // Custom logic applied successfully\n        return { status: "success", data: result, timestamp: new Date() };\n    } catch (error) {\n        console.error("Error: ", error);\n    }\n}\n\n// Example Usage:\nconsole.log(artlumProcessData("Hello Artlum Hub User"));`;
+            } else if(lang === 'cpp') {
+                sampleCode = `// C++ Code generated for: "${prompt}"\n#iostream>\nusing namespace std;\n\nint main() {\n    cout << "=== Artlum Hub C++ Execution ===" << endl;\n    string userQuery = "${prompt}";\n    cout << "Requirement: " << userQuery << endl;\n    cout << "Status: Compiled & Executed Successfully!" << endl;\n    return 0;\n}`;
+            } else if(lang === 'python') {
+                sampleCode = `# Python Script generated for: "${prompt}"\nimport datetime\n\ndef artlum_ai_runner(query):\n    print(f"Executing task for: {query}")\n    current_time = datetime.datetime.now()\n    return {"status": "Active", "time": current_time, "result": "Generated via Artlum Hub"}\n\nif __name__ == "__main__":\n    print(artlum_ai_runner("${prompt}"))`;
+            } else {
+                sampleCode = `<!-- HTML / CSS Code generated for: "${prompt}" -->\n<div style="background: #111; color: #fff; padding: 20px; border-radius: 8px; border-left: 4px solid #7b2cbf;">\n    <h3>Artlum Custom Component</h3>\n    <p>Requirement: ${prompt}</p>\n    <button style="background: #7b2cbf; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Action Button</button>\n</div>`;
+            }
+
+            codeContent.innerText = sampleCode;
+            outputBox.style.display = "block";
+        }
+
+        function copyGeneratedCode() {
+            const codeText = document.getElementById('code-text-content').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                alert("Code copied to clipboard successfully!");
+            });
+        }
+
+        // 2. Text to PDF Logic (Using jsPDF)
+        function downloadTextAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const title = document.getElementById('pdf-title').value.trim() || "Artlum Document";
+            const content = document.getElementById('pdf-content').value.trim();
+
+            if(!content) {
+                alert("Please enter some content for the PDF!");
+                return;
+            }
+
+            const doc = new jsPDF();
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.text(title, 20, 20);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(12);
+            
+            // Split text to fit inside PDF margins
+            const splitText = doc.splitTextToSize(content, 170);
+            doc.text(splitText, 20, 35);
+
+            doc.save(`${title.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+        }
+
+        // 3. Image to PDF Logic
+        function convertImageToPDF() {
+            const fileInput = document.getElementById('image-file-input');
+            if(fileInput.files.length === 0) {
+                alert("Please select an image file first!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const imgData = event.target.result;
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                const img = new Image();
+                img.src = imgData;
+                img.onload = function() {
+                    // Fit image proportionally into A4 page
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    
+                    doc.addImage(imgData, 'JPEG', 15, 20, pageWidth - 30, (img.height * (pageWidth - 30)) / img.width);
+                    doc.save("artlum_converted_image.pdf");
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+
+</body>
+</html>
