@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompts & Assistant | Artlum Hub</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Header - Exact match with Home & Other Pages */
+        header { background: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-container img { height: 45px; width: auto; object-fit: contain; }
+        .logo-text h1 { font-size: 22px; color: #111; font-weight: 700; line-height: 1; }
+        .logo-text span { color: #7b2cbf; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+        
+        nav ul { display: flex; list-style: none; gap: 20px; align-items: center; }
+        nav ul li a { text-decoration: none; color: #444; font-weight: 500; font-size: 14px; transition: 0.3s; }
+        nav ul li a:hover, nav ul li a.active { color: #7b2cbf; }
+        .cta-btn { background: #7b2cbf; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3); }
+        .cta-btn:hover { background: #5a189a; }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(15, 3, 25, 0.85), rgba(30, 8, 45, 0.90)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+        .page-header h2 { font-size: 38px; margin-bottom: 10px; font-weight: 700; }
+        .page-header p { font-size: 15px; color: #e0aaff; max-width: 650px; margin: 0 auto; }
+
+        /* Chat / Assistant Container (ChatGPT / Gemini Style) */
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
+        
+        .chat-box-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chat-header {
+            background: #7b2cbf;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header i { font-size: 24px; }
+        .chat-header h3 { font-size: 16px; font-weight: 600; }
+        .chat-header span { font-size: 11px; color: #e0aaff; display: block; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        .message.ai {
+            background: white;
+            color: #333;
+            align-self: flex-start;
+            border-left: 4px solid #7b2cbf;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .message.user {
+            background: #7b2cbf;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 30px;
+            outline: none;
+            font-size: 13.5px;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #7b2cbf;
+            box-shadow: 0 0 5px rgba(123, 44, 191, 0.2);
+        }
+
+        .chat-input-area button {
+            background: #7b2cbf;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .chat-input-area button:hover { background: #5a189a; }
+
+        /* Quick Prompt Cards */
+        .prompts-vault {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .section-title { text-align: center; margin-bottom: 30px; }
+        .section-title h3 { font-size: 28px; color: #111; font-weight: 700; }
+        .section-title p { color: #666; font-size: 13px; margin-top: 5px; }
+
+        .grid-vault { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .vault-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-top: 3px solid #7b2cbf;
+        }
+        .vault-card h4 { font-size: 16px; color: #222; margin-bottom: 8px; }
+        .vault-card p { color: #555; font-size: 12.5px; margin-bottom: 12px; font-style: italic; background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px dashed #cbd5e1; }
+        .copy-prompt-btn {
+            background: #f1f5f9; color: #7b2cbf; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer; transition: 0.3s; width: 100%;
+        }
+        .copy-prompt-btn:hover { background: #7b2cbf; color: white; }
+
+        /* Footer - Exact match */
+        footer { background: #111; color: white; text-align: center; padding: 35px 20px; margin-top: auto; }
+        footer p { font-size: 13px; color: #aaa; margin-bottom: 8px; }
+        footer span { color: #e0aaff; font-weight: 600; }
+
+        @media(max-width: 768px) {
+            nav { display: none; }
+            .page-header h2 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Consistent with all pages) -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Artlum Logo" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1>Artlum</h1>
+                <span>WHERE IDEAS SHINE</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="design.html">Design & Image Tools</a></li>
+                <li><a href="dev.html">Dev & PDF Tools</a></li>
+                <li><a href="ai.html" class="active">AI Prompts</a></li>
+                <li><a href="contact.html">Contact & Services</a></li>
+            </ul>
+        </nav>
+        <a href="contact.html" class="cta-btn">Hire Us</a>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h2>Artlum AI Assistant & Prompt Vault</h2>
+        <p>Interact with our intelligent assistant, test powerful prompts for images and videos, and copy high-end AI instructions instantly.</p>
+    </section>
+
+    <div class="container">
+
+        <!-- ChatGPT / Gemini Style Interactive Assistant Box -->
+        <div class="chat-box-wrapper">
+            <div class="chat-header">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div>
+                    <h3>Artlum AI Studio Assistant</h3>
+                    <span>Online & Ready to Help You Build, Write, and Design</span>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages-container">
+                <div class="message ai">
+                    Hello! I am your Artlum AI Assistant. Ask me anything about web development, graphic design prompts, video creation, or project ideas, and I will guide you right here!
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="user-chat-input" placeholder="Type your prompt or question here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendUserMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Master AI Prompts Vault Section -->
+        <div class="prompts-vault">
+            <div class="section-title">
+                <h3>Top Tested AI Image & Video Prompts</h3>
+                <p>Click copy to use these professional prompts in Midjourney, DALL-E, or Sora video generators.</p>
+            </div>
+
+            <div class="grid-vault">
+                <div class="vault-card">
+                    <h4>Cinematic Brand Intro Video</h4>
+                    <p id="p1">"3D cinematic luxury logo reveal animation for a tech agency, neon glowing emerald and gold particles, dark navy background, 4k resolution, smooth motion."</p>
+                    <button class="copy-prompt-btn" onclick="copyVaultPrompt('p1')"><i class="fa-regular fa-copy"></i> Copy Prompt</button>
+                </div>
+
+                <div class="vault-card">
+                    <h4>Modern Corporate Website UI</h4>
+                    <p id="p2">"Clean minimalist SaaS dashboard landing page UI/UX design, dark mode theme, glassmorphism cards, violet and emerald accents, Figma vector style."</p>
+                    <button class="copy-prompt-btn" onclick="copyVaultPrompt('p2')"><i class="fa-regular fa-copy"></i> Copy Prompt</button>
+                </div>
+
+                <div class="vault-card">
+                    <h4>E-Commerce Product Mockup</h4>
+                    <p id="p3">"Professional studio product photography of a premium cosmetic bottle on a dark reflective podium, soft dramatic studio lighting, 8k photorealistic."</p>
+                    <button class="copy-prompt-btn" onclick="copyVaultPrompt('p3')"><i class="fa-regular fa-copy"></i> Copy Prompt</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Artlum Hub</span> — Where Ideas Shine. All Rights Reserved.</p>
+        <p style="font-size: 11px; color: #777; margin-top: 5px;">Led by Ubaid Gulzar | Khuiratta, Kotli, Azad Kashmir</p>
+    </footer>
+
+    <!-- JavaScript for AI Assistant Chat Simulator -->
+    <script>
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        }
+
+        function sendUserMessage() {
+            const inputField = document.getElementById('user-chat-input');
+            const chatContainer = document.getElementById('chat-messages-container');
+            const text = inputField.value.trim();
+
+            if (!text) return;
+
+            // Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerText = text;
+            chatContainer.appendChild(userMsg);
+
+            inputField.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Simulate Smart AI Response (ChatGPT / Gemini Style)
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+                
+                const lowerText = text.toLowerCase();
+                if(lowerText.includes('website') || lowerText.includes('web')) {
+                    aiMsg.innerText = "Artlum specializes in custom web development, responsive HTML/CSS/React designs, and E-commerce platforms. You can request a custom build through our Contact & Services page!";
+                } else if(lowerText.includes('logo') || lowerText.includes('design')) {
+                    aiMsg.innerText = "For logo and brand identity design, we recommend high-contrast dark themes with navy blue, emerald green, and gold accents. Check out our Design Tools page for templates!";
+                } else if(lowerText.includes('video') || lowerText.includes('edit')) {
+                    aiMsg.innerText = "Professional video editing, YouTube content creation, and AI video prompt strategies are core services provided by Artlum Hub under Ubaid Gulzar's leadership.";
+                } else {
+                    aiMsg.innerText = `That's a great query regarding "${text}". Artlum AI Assistant recommends exploring our Dev Sandbox or checking out our pre-tested prompt vault below for immediate inspiration!`;
+                }
+
+                chatContainer.appendChild(aiMsg);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 800);
+        }
+
+        function copyVaultPrompt(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("AI Prompt copied to clipboard successfully!");
+            });
+        }
+    </script>
+
+</body>
+</html>
