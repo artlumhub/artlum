@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artlum Hub - Contents & Services</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #161b22;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        header h1 {
+            color: #58a6ff;
+            font-size: 24px;
+        }
+
+        nav a {
+            color: #c9d1d9;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #58a6ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #8b949e;
+            font-size: 16px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #58a6ff;
+        }
+
+        .card i {
+            font-size: 40px;
+            color: #58a6ff;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #238636;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2ea043;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #161b22;
+            border-top: 1px solid #30363d;
+            margin-top: 60px;
+            color: #8b949e;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Artlum Hub</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="ai.html">AI Assistant</a>
+            <a href="services.html" style="color: #58a6ff;">Services</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Professional Services & Contents</h2>
+            <p>Empowering your digital journey with high-end tech solutions and expert resources.</p>
+        </div>
+
+        <div class="grid">
+            <!-- Service 1 -->
+            <div class="card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Web Development</h3>
+                <p>Custom, responsive, and high-performance websites built with modern technologies tailored to your brand identity.</p>
+                <a href="ai.html" class="btn">Explore More</a>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Graphic & UI/UX Design</h3>
+                <p>Stunning brand identities, logos, high-impact social media creatives, and user-friendly interface designs.</p>
+                <a href="ai.html" class="btn">Explore More</a>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="card">
+                <i class="fas fa-robot"></i>
+                <h3>Intelligent AI Solutions</h3>
+                <p>Integrated interactive code-responsive and text-based AI assistants to elevate user engagement on your platforms.</p>
+                <a href="ai.html" class="btn">Try AI Assistant</a>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>IT Training & Resources</h3>
+                <p>Comprehensive educational modules, final-year project guidance, and high-demand digital skills training series.</p>
+                <a href="ai.html" class="btn">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Artlum Hub. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
